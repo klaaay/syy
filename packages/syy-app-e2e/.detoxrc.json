@@ -1,0 +1,100 @@
+{
+  "testRunner": "jest",
+  "runnerConfig": "jest.config.json",
+  "apps": {
+    "ios.debug": {
+      "type": "ios.app",
+      "build": "cd ../../packages/syy-app/ios && xcodebuild -workspace SyyApp.xcworkspace -scheme SyyApp -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' -derivedDataPath ./build -quiet",
+      "binaryPath": "../../packages/syy-app/ios/build/Build/Products/Debug-iphonesimulator/SyyApp.app"
+    },
+    "ios.release": {
+      "type": "ios.app",
+      "build": "cd ../../packages/syy-app/ios && xcodebuild -workspace SyyApp.xcworkspace -scheme SyyApp -configuration Release -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' -derivedDataPath ./build -quiet",
+      "binaryPath": "../../packages/syy-app/ios/build/Build/Products/Release-iphonesimulator/SyyApp.app"
+    },
+
+    "ios.eas": {
+      "type": "ios.app",
+      "build": "yarn nx run syy-app:download --platform ios --distribution simulator --output=packages/syy-app/dist/",
+      "binaryPath": "../../packages/syy-app/dist/SyyApp.app"
+    },
+    "ios.local": {
+      "type": "ios.app",
+      "build": "yarn nx run syy-app:build --platform ios --profile preview --wait --local --no-interactive --output=packages/syy-app/dist/",
+      "binaryPath": "../../packages/syy-app/dist/SyyApp.app"
+    },
+
+    "android.debug": {
+      "type": "android.apk",
+      "build": "cd ../../packages/syy-app/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug",
+      "binaryPath": "../../packages/syy-app/android/app/build/outputs/apk/debug/app-debug.apk"
+    },
+    "android.release": {
+      "type": "android.apk",
+      "build": "cd ../../packages/syy-app/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release",
+      "binaryPath": "../../packages/syy-app/android/app/build/outputs/apk/release/app-release.apk"
+    },
+
+    "android.eas": {
+      "type": "ios.app",
+      "build": "yarn nx run syy-app:download --platform android --output=packages/syy-app/dist/",
+      "binaryPath": "../../packages/syy-app/dist/SyyApp.apk"
+    },
+    "android.local": {
+      "type": "ios.app",
+      "build": "yarn nx run syy-app:build --platform android --profile preview --wait --local --no-interactive --output=packages/syy-app/dist/",
+      "binaryPath": "../../packages/syy-app/dist/SyyApp.apk"
+    }
+  },
+  "devices": {
+    "simulator": {
+      "type": "ios.simulator",
+      "device": {
+        "type": "iPhone 14"
+      }
+    },
+    "emulator": {
+      "type": "android.emulator",
+      "device": {
+        "avdName": "Pixel_4a_API_30"
+      }
+    }
+  },
+  "configurations": {
+    "ios.sim.release": {
+      "device": "simulator",
+      "app": "ios.release"
+    },
+    "ios.sim.debug": {
+      "device": "simulator",
+      "app": "ios.debug"
+    },
+
+    "ios.sim.eas": {
+      "device": "simulator",
+      "app": "ios.eas"
+    },
+    "ios.sim.local": {
+      "device": "simulator",
+      "app": "ios.local"
+    },
+
+    "android.emu.release": {
+      "device": "emulator",
+      "app": "android.release"
+    },
+    "android.emu.debug": {
+      "device": "emulator",
+      "app": "android.debug"
+    },
+
+    "android.emu.eas": {
+      "device": "simulator",
+      "app": "android.eas"
+    },
+    "android.emu.local": {
+      "device": "simulator",
+      "app": "android.local"
+    }
+  }
+}
